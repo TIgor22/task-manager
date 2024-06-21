@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Worker: {{ worker.username }}, {{ worker.position.name }}
+{% endblock %}
+
+{% block content %}
+  
+  {% include "includes/header.html" %}
+  
+  <div class="container" style="max-width: 900px">
+    <h1 class="text-center mb-5">
+      {{ worker.first_name }} {{ worker.last_name }}
+    </h1>
+    <p><span class="font-weight-bold text-dark">Username:</span> {{ worker.username }}</p>
+    <p><span class="font-weight-bold text-dark">Position:</span> {{ worker.position.name }}</p>
+    {% if actual_tasks %}
+      <h4 class="text-center mb-3">Actual Task</h4>
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Task name</th>
+            <th>Deadline</th>
+          </tr>
+        </thead>
+        {% for task in actual_tasks %}
+          <tbody>
+            <tr>
+              <td><a href="{% url 'manager:task-detail' pk=task.pk %}">{{ task.name }}</a></td>
+              <td>{{ task.deadline }}</td>
+            </tr>
+          </tbody>
+        {% endfor %}
+      </table>
+    {% endif %}
+  
+    {% if completed_tasks %}
+      <h4 class="text-center mt-5">Completed Task</h4>
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Task name</th>
+          </tr>
+        </thead>
+        {% for task in completed_tasks %}
+          <tbody>
+            <tr>
+              <td><a href="{% url 'manager:task-detail' pk=task.pk %}">{{ task.name }}</a></td>
+            </tr>
+          </tbody>
+        {% endfor %}
+      </table>
+    {% endif %}
+    <div class="mt-5 row">
+      {% if user.is_staff == True %}
+        <div class="col-3">
+          <a href="{% url 'manager:worker-update' pk=worker.pk %}" class="btn btn-outline-dark">
+            Update worker
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'manager:worker-delete' pk=worker.pk %}" class="btn btn-outline-danger">
+            Delete worker
+          </a>
+        </div>
+      {% else %}
+        <div class="col-3">
+          <a href="{% url 'manager:worker-update' pk=worker.pk %}" class="btn btn-outline-dark disabled">
+            Update worker
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'manager:worker-delete' pk=worker.pk %}" class="btn btn-outline-danger disabled">
+            Delete worker
+          </a>
+        </div>
+        <p>Only the administrator can change information about employees. If necessary, contact the administrator.</p>
+      {% endif %}
+    </div>
+  </div>
+  
+{% endblock %}
