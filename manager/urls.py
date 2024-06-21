@@ -1,10 +1,11 @@
 from django.urls import path
 
-from manager.views import index
+from manager import views
 
 app_name = "manager"
 
 urlpatterns = [
-    path("", index, name="index"),
+    path("", views.index, name="index"),
+    path("task-types/", views.TaskTypeListView.as_view(), name="task-type-list"),
 ]
 
