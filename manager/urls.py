@@ -7,5 +7,6 @@ app_name = "manager"
 urlpatterns = [
     path("", views.index, name="index"),
     path("task-types/", views.TaskTypeListView.as_view(), name="task-type-list"),
+    path("task-types/create/", views.TaskTypeCreateView.as_view(), name="task-type-create"),
 ]
 
