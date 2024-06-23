@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from manager.forms import TaskTypeForm, PositionForm, WorkerForm, TaskSearchForm, TaskForm
@@ -136,3 +136,16 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     template_name = "manager/task_confirm_delete.html"
+
+
+class TaskCompletedView(LoginRequiredMixin, generic.View):
+    model = Task
+
+    def post(self, request: HttpRequest, pk: int) -> HttpResponseRedirect:
+        task = get_object_or_404(Task, pk=pk)
+        task.is_completed = not task.is_completed
+        task.save()
+
+        return HttpResponseRedirect(
+            reverse("manager:task-detail", kwargs={"pk": pk})
+        )
