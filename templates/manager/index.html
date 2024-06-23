@@ -61,7 +61,7 @@
               <br><br>
               In order to find the tasks that have been given to you, follow the link below.
             </p>
-            <a href="#" target="blank" rel="nofollow" class="text-dark icon-move-right">Check Your Tasks
+            <a href="{% url 'manager:worker-detail' pk=user.pk %}" target="blank" rel="nofollow" class="text-dark icon-move-right">Check Your Tasks
               <i class="fas fa-arrow-right text-sm ms-1"></i>
             </a>
           </div>
