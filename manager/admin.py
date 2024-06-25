@@ -21,14 +21,26 @@ class PositionAdmin(admin.ModelAdmin):
 @admin.register(Worker)
 class WorkerAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ("position", )
-    fieldsets = UserAdmin.fieldsets + (("Additional info", {"fields": ("position", )}),)
+    fieldsets = UserAdmin.fieldsets + (
+        ("Additional info", {"fields": ("position", )}),
+    )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ("Additional info", {"fields": ("first_name", "last_name", "position")}),
+        (
+            "Additional info",
+            {"fields": ("first_name", "last_name", "position")}
+        ),
     )
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ["name", "description", "deadline", "is_completed", "task_type", "priority"]
+    list_display = [
+        "name",
+        "description",
+        "deadline",
+        "is_completed",
+        "task_type",
+        "priority"
+    ]
     list_filter = ["priority", "name"]
     search_fields = ["name"]
