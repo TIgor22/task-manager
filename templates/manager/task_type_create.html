@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}Task type create{% endblock %}
+
+{% block content %}
+  <div class="page-header section-height-100">
+    <div class="oblique position-absolute top-0 h-100 d-md-block d-none">
+      <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url(/static/img/IT/it_04.jpg)"></div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-7 d-flex justify-content-center flex-column">
+          <h1 class="text-gradient text-danger">Create Task Type</h1>
+          <p class="lead pe-5 me-5">Create your task type as needed. </p>
+          <form method="post" action="">
+            <div class="max-width-500">
+              {% csrf_token %}
+              {{ form|crispy }}
+            </div>
+            <div class="buttons">
+              <input type="submit" class="btn bg-gradient-primary mt-4" value="Create">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

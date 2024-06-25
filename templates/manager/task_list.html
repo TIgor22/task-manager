@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}Task list{% endblock %}
+
+{% block content %}
+  
+  {% include "includes/header.html" %}
+  
+  <div class="container">  
+    <div class="position-relative  shadow-lg mb-7">
+      <div class="container border-bottom">
+        <div class="row py-3">
+          <div class="col-lg-4 text-start">
+            <p class="lead text-dark pt-1 mb-0"></p>
+          </div>
+          <div class="col-lg-4 mt-1 text-center">
+            <h1 class="text-dark">Task list</h1>
+          </div>
+          <div class="col-lg-4 text-end my-auto">
+            <a href="{% url 'manager:task-create' %}" class="text-primary icon-move-right">Create new Task
+              <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="ml-5 h-100">
+        <form action="" method="get" class="form-row">
+          {{ search_form|crispy }}
+          <input type="submit" value="Search" class="btn btn-outline-dark">
+        </form>
+      </div>
+      <div>
+        {% if task_list %}
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th>Task name</th>
+                <th>Deadline</th>
+                <th>Is completed</th>
+                <th>Task type</th>
+                <th>Assignees</th>
+                <th>Priority</th>
+              </tr>
+            </thead>
+            {% for task in task_list %}
+              <tbody>
+                <tr>
+                  <td>
+                    <a href="{% url 'manager:task-detail' pk=task.pk %}">
+                      {{ task.name }}
+                    </a>
+                  </td>
+                  <td>{{ task.deadline }}</td>
+                  <td>
+                    {% if task.is_completed == True %}
+                      <span class="text-success">{{ task.is_completed }}</span>
+                    {% else %}
+                      <span class="text-danger">{{ task.is_completed }}</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ task.task_type }}</td>
+                  <td>
+                    {% for worker in task.assignees.all %}
+                      <a href="{% url 'manager:worker-detail' pk=worker.pk %}">
+                        {{ worker.first_name }} {{ worker.last_name }}{% if not forloop.last %}, 
+                        {% endif %}
+                      </a>
+                    {% endfor %}
+                  </td>
+                  <td>{{ task.priority|capfirst }}</td>
+                </tr>
+              </tbody>
+            {% endfor %}
+          </table>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}

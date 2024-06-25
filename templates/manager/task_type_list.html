@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Task type list{% endblock %}
+
+{% block content %}
+  
+  {% include "includes/header.html" %}
+  
+  <div class="container">  
+    <div class="position-relative border-radius-xl overflow-hidden shadow-lg mb-7">
+      <div class="container border-bottom">
+        <div class="row py-3">
+          <div class="col-lg-4 text-start">
+            <p class="lead text-dark pt-1 mb-0"></p>
+          </div>
+          <div class="col-lg-4 mt-1 text-center">
+            <h1 class="text-dark">Task type list</h1>
+          </div>
+          <div class="col-lg-4 text-end my-auto">
+            <a href="{% url 'manager:task-type-create' %}" class="text-primary icon-move-right">Create new Task type
+              <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div>
+        {% if tasktype_list %}
+          <ul class="list-group-flush">
+            {% for tasktype in tasktype_list %}
+              <li class="list-group-item">{{ tasktype.name }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}

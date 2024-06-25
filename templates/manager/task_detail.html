@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Task: {{ task.name }}
+{% endblock %}
+
+{% block content %}
+  
+  {% include "includes/header.html" %}
+  
+  <div class="container" style="max-width: 900px">
+    <h1 class="text-center mb-5">
+      Task: {{ task.name }}
+    </h1>
+    {% if task.is_completed == False %}
+      <div class="mb-5">
+        <p>Click after completing the task.</p>
+        <form action="{% url 'manager:task-completed' pk=task.pk %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Completed" class="btn btn-outline-primary">
+        </form>
+      </div>
+    {% endif %}
+    <p><span class="font-weight-bold text-dark">Description:</span> {{ task.description }}</p>
+    <p><span class="font-weight-bold text-dark">Deadline:</span> {{ task.deadline }}</p>
+    <p>
+      <span class="font-weight-bold text-dark">Is completed:</span>
+      {% if task.is_completed == True %}
+        <span class="text-success">{{ task.is_completed }}</span>
+      {% else %}
+        <span class="text-danger">{{ task.is_completed }}</span>
+      {% endif %}
+    </p>
+    <p><span class="font-weight-bold text-dark">Task type:</span> {{ task.task_type.name }}</p>
+    <p><span class="font-weight-bold text-dark">Priority:</span> {{ task.priority }}</p>
+    <p class="mb-5"><span class="font-weight-bold text-dark">Assignees: </span>
+      {% for worker in task.assignees.all %}
+        <a href="{% url 'manager:worker-detail' pk=worker.pk %}">
+          {{ worker.first_name }} {{ worker.last_name }}
+        </a>
+      {% endfor %}
+    </p>
+    <div>
+      <a href="{% url 'manager:task-update' pk=task.pk %}" class="btn btn-dark">Update</a>
+      <a href="{% url 'manager:task-delete' pk=task.pk %}" class="btn btn-outline-danger">Delete</a>
+    </div>
+  </div>
+  
+{% endblock %}
