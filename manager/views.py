@@ -143,6 +143,7 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     template_name = "manager/task_confirm_delete.html"
+    success_url = reverse_lazy("manager:task-list")
 
 
 class TaskCompletedView(LoginRequiredMixin, generic.View):
