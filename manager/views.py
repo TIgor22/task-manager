@@ -5,7 +5,9 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from manager.forms import TaskTypeForm, PositionForm, WorkerForm, TaskSearchForm, TaskForm
+from manager.forms import (
+    TaskTypeForm, PositionForm, WorkerForm, TaskSearchForm, TaskForm
+)
 from manager.models import Task, Worker, TaskType, Position
 
 
@@ -65,8 +67,12 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         worker = self.object
 
-        completed_tasks = Task.objects.filter(assignees=worker, is_completed=True)
-        actual_tasks = Task.objects.filter(assignees=worker, is_completed=False)
+        completed_tasks = Task.objects.filter(
+            assignees=worker, is_completed=True
+        )
+        actual_tasks = Task.objects.filter(
+            assignees=worker, is_completed=False
+        )
 
         context["actual_tasks"] = actual_tasks
         context["completed_tasks"] = completed_tasks
@@ -91,6 +97,7 @@ class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
 class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Worker
     template_name = "manager/worker_confirm_delete.html"
+    success_url = reverse_lazy("manager:worker-list")
 
 
 class TaskView(LoginRequiredMixin, generic.ListView):
