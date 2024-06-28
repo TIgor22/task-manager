@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
-ALLOWED_HOSTS = ["localhost", "task-manager-a5tn.onrender.com"]
+ALLOWED_HOSTS = ["localhost", "task-manager-mmaj.onrender.com"]
 
 
 # Application definition

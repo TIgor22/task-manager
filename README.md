@@ -4,7 +4,7 @@ Django project for managing task
 
 ## Check it out!
 
-[Task Manager project deployed to  Render](https://task-manager-a5tn.onrender.com/)
+[Task Manager project deployed to  Render](https://task-manager-mmaj.onrender.com)
 
 ## Test user
 
